@@ -20,7 +20,20 @@ def output_path():
     return "/output/entry.txt"
 
 
+def validate_line(line):
+    """Guard: the entry must be exactly one non-empty line, at most 160 chars."""
+    if not line:
+        raise ValueError("excuse line must not be empty")
+    if "\n" in line or "\r" in line:
+        raise ValueError("excuse line must be a single line")
+    if len(line) > 160:
+        raise ValueError(
+            f"excuse line is {len(line)} characters, over the 160-character limit"
+        )
+
+
 def main():
+    validate_line(LINE)
     path = output_path()
     directory = os.path.dirname(path)
     if directory:
